@@ -81,3 +81,64 @@ function formatWhatsAppNumber(number) {
     
     return cleaned;
 }
+
+// Carousel functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.carousel');
+    if (!carousel) return;
+
+    const slides = document.querySelector('.carousel-slides');
+    const slideItems = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    
+    let currentSlide = 0;
+    const totalSlides = slideItems.length;
+
+    // Function to update carousel position
+    function updateCarousel() {
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            if (index === currentSlide) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+
+    // Next slide function
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+    }
+
+    // Previous slide function
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+    }
+
+    // Add event listeners
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
+
+    // Add click events to indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentSlide = index;
+            updateCarousel();
+        });
+    });
+
+    // Auto-advance slides every 5 seconds
+    setInterval(nextSlide, 5000);
+});
