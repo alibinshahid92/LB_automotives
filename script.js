@@ -162,3 +162,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-advance slides every 5 seconds
     setInterval(nextSlide, 5000);
 });
+
+// FAQ functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isActive = question.classList.contains('active');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-answer').forEach(a => {
+                a.classList.remove('active');
+            });
+            
+            // Open this one if it wasn't active
+            if (!isActive) {
+                question.classList.add('active');
+                answer.classList.add('active');
+            }
+        });
+
+        // Add touch event for mobile
+        question.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            question.click();
+        });
+    });
+});
