@@ -57,7 +57,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe elements for animation
+// Observe elements for animation and initialize carousel
 document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.service-card, .about-content, .fleet-content, .contact-content');
     
@@ -67,23 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
-});
 
-// WhatsApp number validation and formatting (for future use)
-function formatWhatsAppNumber(number) {
-    // Remove all non-digit characters
-    const cleaned = number.replace(/\D/g, '');
-    
-    // Ensure it starts with country code
-    if (cleaned.startsWith('0')) {
-        return '44' + cleaned.slice(1);
-    }
-    
-    return cleaned;
-}
-
-// Carousel functionality
-document.addEventListener('DOMContentLoaded', function() {
+    // Carousel functionality
     const carousel = document.querySelector('.carousel');
     if (!carousel) return;
 
@@ -95,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let currentSlide = 0;
     const totalSlides = slideItems.length;
+    let startX = 0;
+    let endX = 0;
 
     // Function to update carousel position
     function updateCarousel() {
@@ -122,13 +109,21 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCarousel();
     }
 
-    // Add event listeners
+    // Add event listeners for buttons
     if (nextBtn) {
         nextBtn.addEventListener('click', nextSlide);
+        nextBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            nextSlide();
+        });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', prevSlide);
+        prevBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            prevSlide();
+        });
     }
 
     // Add click events to indicators
@@ -137,6 +132,31 @@ document.addEventListener('DOMContentLoaded', function() {
             currentSlide = index;
             updateCarousel();
         });
+        indicator.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            currentSlide = index;
+            updateCarousel();
+        });
+    });
+
+    // Touch events for swipe handling
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        endX = e.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchend', () => {
+        const swipeThreshold = 50;
+        if (startX - endX > swipeThreshold) {
+            // Swipe left - next slide
+            nextSlide();
+        } else if (endX - startX > swipeThreshold) {
+            // Swipe right - previous slide
+            prevSlide();
+        }
     });
 
     // Auto-advance slides every 5 seconds
