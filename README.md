@@ -1,6 +1,6 @@
-# LB Automotives Website
+# Essex Recoveries Website
 
-A modern, responsive website for LB Automotives - a professional car recovery service based in East London.
+A modern, responsive website for Essex Recoveries - a professional car recovery service based in East London.
 
 ## Features
 
@@ -93,7 +93,7 @@ LB_automotives/
 
 ## License
 
-This project is for LB Automotives business use. All rights reserved.
+This project is for Essex Recoveries business use. All rights reserved.
 
 ## Support
 
