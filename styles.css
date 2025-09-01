@@ -565,6 +565,10 @@ section {
         font-size: 2rem;
     }
 
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
     .cta-button {
         padding: 12px 24px;
         font-size: 1rem;
@@ -576,6 +580,26 @@ section {
 
     section {
         padding: 60px 0;
+    }
+
+    /* Further mobile adjustments for carousel */
+    .carousel {
+        height: 250px;
+    }
+
+    .carousel-prev,
+    .carousel-next {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .carousel-indicators {
+        bottom: 8px;
+    }
+
+    .carousel-indicator {
+        width: 8px;
+        height: 8px;
     }
 }
 
